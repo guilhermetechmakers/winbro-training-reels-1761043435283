@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { useAuth } from '@/contexts/AuthContext';
 import { 
   Search, 
   Bell, 
@@ -23,6 +24,7 @@ import {
 export function DashboardPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const { user } = useAuth();
 
   // Mock data - in real app this would come from API
   const stats = [
@@ -145,12 +147,14 @@ export function DashboardPage() {
               {/* User Menu */}
               <div className="flex items-center space-x-2">
                 <Avatar className="h-8 w-8">
-                  <AvatarImage src="/api/placeholder/32/32" />
-                  <AvatarFallback>JD</AvatarFallback>
+                  <AvatarImage src={user?.avatar_url || ''} />
+                  <AvatarFallback>
+                    {user?.full_name ? user.full_name.split(' ').map(n => n[0]).join('').toUpperCase() : 'U'}
+                  </AvatarFallback>
                 </Avatar>
                 <div className="hidden md:block">
-                  <p className="text-sm font-medium">John Doe</p>
-                  <p className="text-xs text-muted-foreground">Training Manager</p>
+                  <p className="text-sm font-medium">{user?.full_name || 'User'}</p>
+                  <p className="text-xs text-muted-foreground capitalize">{user?.role?.replace('_', ' ') || 'User'}</p>
                 </div>
               </div>
             </div>
@@ -162,7 +166,7 @@ export function DashboardPage() {
         {/* Welcome Section */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-foreground mb-2">
-            Welcome back, John!
+            Welcome back, {user?.full_name?.split(' ')[0] || 'User'}!
           </h1>
           <p className="text-muted-foreground">
             Here's what's happening with your training content today.

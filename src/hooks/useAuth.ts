@@ -15,7 +15,6 @@ export const useCurrentUser = () => {
     queryFn: authApi.getCurrentUser,
     retry: false,
     staleTime: 1000 * 60 * 10, // 10 minutes
-    enabled: !!localStorage.getItem('auth_token'),
   });
 };
 
@@ -34,7 +33,7 @@ export const useSignIn = () => {
       toast.success('Signed in successfully!');
     },
     onError: (error: any) => {
-      toast.error(`Sign in failed: ${error.response?.data?.message || error.message}`);
+      toast.error(`Sign in failed: ${error.message}`);
     },
   });
 };
@@ -47,7 +46,7 @@ export const useSignUp = () => {
       toast.success('Account created! Please check your email to verify your account.');
     },
     onError: (error: any) => {
-      toast.error(`Sign up failed: ${error.response?.data?.message || error.message}`);
+      toast.error(`Sign up failed: ${error.message}`);
     },
   });
 };
@@ -65,7 +64,7 @@ export const useSignOut = () => {
       toast.success('Signed out successfully!');
     },
     onError: (error: any) => {
-      toast.error(`Sign out failed: ${error.response?.data?.message || error.message}`);
+      toast.error(`Sign out failed: ${error.message}`);
     },
   });
 };
@@ -78,7 +77,7 @@ export const usePasswordReset = () => {
       toast.success('Password reset email sent! Check your inbox.');
     },
     onError: (error: any) => {
-      toast.error(`Password reset failed: ${error.response?.data?.message || error.message}`);
+      toast.error(`Password reset failed: ${error.message}`);
     },
   });
 };
@@ -91,7 +90,7 @@ export const usePasswordResetConfirm = () => {
       toast.success('Password updated successfully! You can now sign in.');
     },
     onError: (error: any) => {
-      toast.error(`Password update failed: ${error.response?.data?.message || error.message}`);
+      toast.error(`Password update failed: ${error.message}`);
     },
   });
 };
@@ -104,7 +103,7 @@ export const useEmailVerification = () => {
       toast.success('Email verified successfully!');
     },
     onError: (error: any) => {
-      toast.error(`Email verification failed: ${error.response?.data?.message || error.message}`);
+      toast.error(`Email verification failed: ${error.message}`);
     },
   });
 };

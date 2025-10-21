@@ -1,9 +1,10 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
+import { AuthProvider } from "@/contexts/AuthContext";
+import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import { LandingPage } from "@/pages/LandingPage";
-import { LoginPage } from "@/pages/LoginPage";
-import { SignupPage } from "@/pages/SignupPage";
+import { LoginSignupPage } from "@/pages/LoginSignupPage";
 import { PasswordResetPage } from "@/pages/PasswordResetPage";
 import { EmailVerificationPage } from "@/pages/EmailVerificationPage";
 import { DashboardPage } from "@/pages/DashboardPage";
@@ -37,40 +38,114 @@ const queryClient = new QueryClient({
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        <Routes>
+      <AuthProvider>
+        <BrowserRouter>
+          <Routes>
           {/* Public routes */}
           <Route path="/" element={<LandingPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignupPage />} />
-          <Route path="/password-reset" element={<PasswordResetPage />} />
-          <Route path="/email-verification" element={<EmailVerificationPage />} />
+          <Route path="/login" element={
+            <ProtectedRoute requireAuth={false}>
+              <LoginSignupPage />
+            </ProtectedRoute>
+          } />
+          <Route path="/signup" element={
+            <ProtectedRoute requireAuth={false}>
+              <LoginSignupPage />
+            </ProtectedRoute>
+          } />
+          <Route path="/password-reset" element={
+            <ProtectedRoute requireAuth={false}>
+              <PasswordResetPage />
+            </ProtectedRoute>
+          } />
+          <Route path="/email-verification" element={
+            <ProtectedRoute requireAuth={false}>
+              <EmailVerificationPage />
+            </ProtectedRoute>
+          } />
           
           {/* Protected routes */}
-          <Route path="/dashboard" element={<DashboardPage />} />
-          <Route path="/library" element={<ContentLibraryPage />} />
-          <Route path="/clip/:id" element={<ClipViewerPage />} />
-          <Route path="/upload" element={<UploadContentPage />} />
-          <Route path="/course-builder" element={<CourseBuilderPage />} />
-          <Route path="/course/:id" element={<LearningPlayerPage />} />
-          <Route path="/quiz/:id" element={<QuizCertificatePage />} />
+          <Route path="/dashboard" element={
+            <ProtectedRoute>
+              <DashboardPage />
+            </ProtectedRoute>
+          } />
+          <Route path="/library" element={
+            <ProtectedRoute>
+              <ContentLibraryPage />
+            </ProtectedRoute>
+          } />
+          <Route path="/clip/:id" element={
+            <ProtectedRoute>
+              <ClipViewerPage />
+            </ProtectedRoute>
+          } />
+          <Route path="/upload" element={
+            <ProtectedRoute>
+              <UploadContentPage />
+            </ProtectedRoute>
+          } />
+          <Route path="/course-builder" element={
+            <ProtectedRoute>
+              <CourseBuilderPage />
+            </ProtectedRoute>
+          } />
+          <Route path="/course/:id" element={
+            <ProtectedRoute>
+              <LearningPlayerPage />
+            </ProtectedRoute>
+          } />
+          <Route path="/quiz/:id" element={
+            <ProtectedRoute>
+              <QuizCertificatePage />
+            </ProtectedRoute>
+          } />
           
           {/* Admin routes */}
-          <Route path="/admin" element={<AdminDashboardPage />} />
-          <Route path="/admin/users" element={<UserManagementPage />} />
+          <Route path="/admin" element={
+            <ProtectedRoute>
+              <AdminDashboardPage />
+            </ProtectedRoute>
+          } />
+          <Route path="/admin/users" element={
+            <ProtectedRoute>
+              <UserManagementPage />
+            </ProtectedRoute>
+          } />
           
           {/* Settings and billing */}
-          <Route path="/settings" element={<SettingsPage />} />
-          <Route path="/checkout" element={<CheckoutPage />} />
-          <Route path="/orders" element={<OrderHistoryPage />} />
-          <Route path="/analytics" element={<AnalyticsPage />} />
-          <Route path="/help" element={<HelpPage />} />
+          <Route path="/settings" element={
+            <ProtectedRoute>
+              <SettingsPage />
+            </ProtectedRoute>
+          } />
+          <Route path="/checkout" element={
+            <ProtectedRoute>
+              <CheckoutPage />
+            </ProtectedRoute>
+          } />
+          <Route path="/orders" element={
+            <ProtectedRoute>
+              <OrderHistoryPage />
+            </ProtectedRoute>
+          } />
+          <Route path="/analytics" element={
+            <ProtectedRoute>
+              <AnalyticsPage />
+            </ProtectedRoute>
+          } />
+          <Route path="/help" element={
+            <ProtectedRoute>
+              <HelpPage />
+            </ProtectedRoute>
+          } />
           
           {/* 404 */}
           <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-      </BrowserRouter>
-      <Toaster />
+          </Routes>
+        </BrowserRouter>
+        <Toaster />
+      </AuthProvider>
     </QueryClientProvider>
   );
 }

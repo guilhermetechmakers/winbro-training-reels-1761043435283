@@ -1,0 +1,12 @@
+{
+  "migration_name": "20241013120000_create_auth_tables",
+  "created_at": "2024-10-13T12:00:00Z",
+  "description": "Create authentication tables for users and organizations with RLS policies",
+  "tables_created": ["users", "organizations"],
+  "tables_modified": [],
+  "tables_deleted": [],
+  "breaking_changes": false,
+  "rollback_sql": "DROP TABLE IF EXISTS users CASCADE; DROP TABLE IF EXISTS organizations CASCADE; DROP FUNCTION IF EXISTS handle_new_user(); DROP FUNCTION IF EXISTS handle_user_update(); DROP FUNCTION IF EXISTS update_last_login(UUID);",
+  "estimated_rows": 0,
+  "requires_downtime": false
+}

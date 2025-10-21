@@ -29,35 +29,39 @@ export function EmailPasswordForm({
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <div className={`space-y-4 ${className}`}>
+    <div className={`space-y-6 ${className}`}>
       <div className="space-y-2">
-        <Label htmlFor="email">Email</Label>
+        <Label htmlFor="email" className="text-sm font-medium text-foreground">Email</Label>
         <Input
           id="email"
           type="email"
           placeholder="Enter your email"
           {...register('email')}
-          className={errors.email ? 'border-winbro-error' : ''}
+          className={`transition-all duration-300 focus:ring-2 focus:ring-winbro-teal/20 focus:border-winbro-teal ${
+            errors.email ? 'border-winbro-error focus:ring-winbro-error/20' : 'border-border'
+          }`}
         />
         {errors.email && (
-          <p className="text-sm text-winbro-error">{errors.email.message}</p>
+          <p className="text-sm text-winbro-error animate-fade-in-down">{errors.email.message}</p>
         )}
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="password">Password</Label>
+        <Label htmlFor="password" className="text-sm font-medium text-foreground">Password</Label>
         <div className="relative">
           <Input
             id="password"
             type={showPassword ? 'text' : 'password'}
             placeholder="Enter your password"
             {...register('password')}
-            className={errors.password ? 'border-winbro-error pr-10' : 'pr-10'}
+            className={`transition-all duration-300 focus:ring-2 focus:ring-winbro-teal/20 focus:border-winbro-teal pr-10 ${
+              errors.password ? 'border-winbro-error focus:ring-winbro-error/20' : 'border-border'
+            }`}
           />
           <button
             type="button"
             onClick={() => setShowPassword(!showPassword)}
-            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground"
+            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors duration-300 hover:scale-110"
           >
             {showPassword ? (
               <EyeOff className="h-4 w-4" />
@@ -67,25 +71,26 @@ export function EmailPasswordForm({
           </button>
         </div>
         {errors.password && (
-          <p className="text-sm text-winbro-error">{errors.password.message}</p>
+          <p className="text-sm text-winbro-error animate-fade-in-down">{errors.password.message}</p>
         )}
       </div>
 
       {showRememberMe && (
         <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-3">
             <Checkbox 
               id="remember_me" 
               {...register('remember_me')}
+              className="transition-all duration-300 hover:scale-110"
             />
-            <Label htmlFor="remember_me" className="text-sm">
+            <Label htmlFor="remember_me" className="text-sm font-medium cursor-pointer">
               Remember me
             </Label>
           </div>
           {showForgotPassword && (
             <a 
               href="/password-reset" 
-              className="text-sm text-winbro-teal hover:underline"
+              className="text-sm text-winbro-teal hover:underline font-medium transition-colors duration-300 hover:text-winbro-teal/80"
             >
               Forgot password?
             </a>

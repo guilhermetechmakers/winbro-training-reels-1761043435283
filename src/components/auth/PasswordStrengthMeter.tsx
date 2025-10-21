@@ -1,4 +1,3 @@
-import { Progress } from '@/components/ui/progress';
 import { Check, X } from 'lucide-react';
 
 interface PasswordStrengthMeterProps {
@@ -42,10 +41,10 @@ export function PasswordStrengthMeter({ password, className }: PasswordStrengthM
   if (!password) return null;
 
   return (
-    <div className={`space-y-2 ${className}`}>
+    <div className={`space-y-3 ${className}`}>
       <div className="flex items-center justify-between text-sm">
-        <span>Password strength:</span>
-        <span className={`font-medium ${
+        <span className="text-muted-foreground">Password strength:</span>
+        <span className={`font-semibold transition-colors duration-300 ${
           passwordStrength < 40 ? 'text-winbro-error' :
           passwordStrength < 80 ? 'text-winbro-amber' :
           'text-winbro-success'
@@ -53,23 +52,44 @@ export function PasswordStrengthMeter({ password, className }: PasswordStrengthM
           {getPasswordStrengthText(passwordStrength)}
         </span>
       </div>
-      <Progress 
-        value={passwordStrength} 
-        className="h-2"
-      />
-      <div className={`h-2 rounded-full ${getPasswordStrengthColor(passwordStrength)}`} 
-           style={{ width: `${passwordStrength}%` }} />
       
-      {/* Password Requirements */}
-      <div className="space-y-1">
+      {/* Enhanced progress bar */}
+      <div className="relative">
+        <div className="h-2 bg-muted rounded-full overflow-hidden">
+          <div 
+            className={`h-full rounded-full transition-all duration-500 ease-out ${getPasswordStrengthColor(passwordStrength)}`}
+            style={{ width: `${passwordStrength}%` }}
+          />
+        </div>
+        {/* Glow effect */}
+        <div 
+          className={`absolute top-0 h-2 rounded-full opacity-30 blur-sm transition-all duration-500 ${getPasswordStrengthColor(passwordStrength)}`}
+          style={{ width: `${passwordStrength}%` }}
+        />
+      </div>
+      
+      {/* Enhanced Password Requirements */}
+      <div className="space-y-2">
         {passwordRequirements.map((req, index) => (
-          <div key={index} className="flex items-center text-sm">
-            {req.met ? (
-              <Check className="h-4 w-4 text-winbro-success mr-2" />
-            ) : (
-              <X className="h-4 w-4 text-winbro-error mr-2" />
-            )}
-            <span className={req.met ? 'text-winbro-success' : 'text-muted-foreground'}>
+          <div 
+            key={index} 
+            className={`flex items-center text-sm transition-all duration-300 ${
+              req.met ? 'animate-fade-in-up' : ''
+            }`}
+            style={{ animationDelay: `${index * 100}ms` }}
+          >
+            <div className={`p-0.5 rounded-full transition-all duration-300 ${
+              req.met ? 'bg-winbro-success/10' : 'bg-winbro-error/10'
+            }`}>
+              {req.met ? (
+                <Check className="h-3 w-3 text-winbro-success" />
+              ) : (
+                <X className="h-3 w-3 text-winbro-error" />
+              )}
+            </div>
+            <span className={`ml-2 transition-colors duration-300 ${
+              req.met ? 'text-winbro-success font-medium' : 'text-muted-foreground'
+            }`}>
               {req.text}
             </span>
           </div>

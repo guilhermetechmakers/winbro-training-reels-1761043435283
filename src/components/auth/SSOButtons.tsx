@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { Shield } from 'lucide-react';
+import { Building2 } from 'lucide-react';
 
 interface SSOButtonsProps {
   onGoogleSignIn?: () => void;
@@ -13,9 +13,9 @@ export function SSOButtons({ onGoogleSignIn, onSAMLSignIn, className }: SSOButto
       <Button
         variant="outline"
         onClick={onGoogleSignIn}
-        className="w-full"
+        className="w-full h-12 border-2 border-border hover:border-winbro-teal/50 hover:bg-winbro-teal/5 transition-all duration-300 hover:scale-[1.02] group"
       >
-        <svg className="h-4 w-4 mr-2" viewBox="0 0 24 24">
+        <svg className="h-5 w-5 mr-2 group-hover:scale-110 transition-transform duration-300" viewBox="0 0 24 24">
           <path
             fill="currentColor"
             d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
@@ -33,15 +33,15 @@ export function SSOButtons({ onGoogleSignIn, onSAMLSignIn, className }: SSOButto
             d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
           />
         </svg>
-        Google
+        <span className="font-medium">Google</span>
       </Button>
       <Button
         variant="outline"
         onClick={onSAMLSignIn}
-        className="w-full"
+        className="w-full h-12 border-2 border-border hover:border-winbro-teal/50 hover:bg-winbro-teal/5 transition-all duration-300 hover:scale-[1.02] group"
       >
-        <Shield className="h-4 w-4 mr-2" />
-        SSO
+        <Building2 className="h-5 w-5 mr-2 group-hover:scale-110 transition-transform duration-300" />
+        <span className="font-medium">Enterprise</span>
       </Button>
     </div>
   );
